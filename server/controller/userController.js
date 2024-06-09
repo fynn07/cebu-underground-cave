@@ -2,12 +2,7 @@ const pool = require('../config/database');
 const bcrypt = require('bcrypt');
 
 const createUser = async(req, res) => {
-    const { Email, Password, ConfirmPassword , DisplayName, ProfilePictureLink} = req.body;
-
-    //custom error handle
-    if(Password !== ConfirmPassword){
-        return res.status(400).json({error : "Passwords do not Match"});
-    }
+    const { Email, Password, DisplayName, ProfilePictureLink} = req.body;
     
     try {
         const passwordHash = await bcrypt.hash(Password, 10);
