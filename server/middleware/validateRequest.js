@@ -1,5 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const pool = require('../config/database'); 
+const bcrypt = require('bcrypt');
 
 const validateSignUpRequest = [
     //prebuilt express validator methods
@@ -12,7 +13,7 @@ const validateSignUpRequest = [
     async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array()[0] });
+            return res.status(400).json({ error: errors.array()[0].msg });
         }
 
         const { Email, Password, ConfirmPassword, DisplayName } = req.body;
@@ -42,4 +43,38 @@ const validateSignUpRequest = [
     }
 ];
 
-module.exports = { validateSignUpRequest };
+const validateLoginRequest = [
+    body('Email').isEmail().withMessage('Invalid Email Address'),
+
+    async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ error: errors.array()[0].msg });
+        }
+        
+        const { Email, Password } = req.body;
+
+        //custom error handling
+        if(!Email || !Password){
+            return res.status(401).json({ error: "Please provide all fields with values" }); 
+        }
+
+        const result = await pool.query(`SELECT "UserID", "Email", "Password" FROM "User" WHERE "Email" = $1`, [Email]);
+
+        if(result.rows.length === 0){
+            return res.status(401).json( {error : "Invalid Credentials"} );
+        }
+
+        const user = result.rows[0];
+
+        const match = await bcrypt.compare(Password, user.Password);
+
+        if(!match){
+            return res.status(401).json( {error : "Password is incorrect"} );
+        }
+
+        next();
+    }
+]
+
+module.exports = { validateSignUpRequest, validateLoginRequest };
