@@ -7,6 +7,10 @@ const createPost = async(req, res) => {
 
     const AuthorId = req.user.Id;
 
+    if(!Title || !Content){
+        return res.status(400).json({error : "Title and Content Required"});
+    }
+
     try {
         const result = await pool.query(
             `INSERT INTO "Post" ("Title", "Content", "ImageLink", "Genre", "AuthorID") VALUES ($1, $2, $3, $4, $5)`,
@@ -16,6 +20,7 @@ const createPost = async(req, res) => {
         return res.json({message : "Post successful"});
 
     } catch (err) {
+        console.error(err);
         return res.status(500).json({error : "Internal Server Error"}, err);
     }
 }

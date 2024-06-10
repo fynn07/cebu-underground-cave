@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv').config();
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 
 const PORT = 3400;
 const app = express();
@@ -10,6 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(helmet());
 
 app.use('/', require('./routes/userRoutes'));
 app.use('/', require('./routes/contentRoutes'));
