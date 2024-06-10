@@ -22,16 +22,20 @@ const createUser = async(req, res) => {
 }
 
 const loginUser = async(req, res) => {
-    const { Email, Password } = req.body;
+    const { Email } = req.body;
 
     try {
         const result = await pool.query(`SELECT "UserID", "Email", "Password" FROM "User" WHERE "Email" = $1`, [Email]);
 
         const user = result.rows[0];
 
-        const token = jwt.sign( {Id : user.UserID, Email : user.Email}, process.env.SECRET_KEY, {expiresIn : '1h'} );
+        const token = jwt.sign( {Id : user.UserID, Email : user.Email, test : "hey"}, process.env.SECRET_KEY, {expiresIn : '1h'} );
+        
+        res.cookie('token', token, {
+            maxAge : 3600000
+        })
 
-        return res.json({email : user.Email, password : user.Password, token : token});
+        return res.status(200).json({message : "Login Successful", token : token});
 
     } catch (err) {
         console.error("Internal Server Error", err);
