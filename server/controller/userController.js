@@ -43,4 +43,14 @@ const loginUser = async(req, res) => {
     }
 }
 
-module.exports = { createUser, loginUser }
+const logoutUser = async(req, res) => {
+    try {
+        res.clearCookie('token');
+        return res.status(200).json({message: "Logout Successful"});
+    } catch (err) {
+        console.error("Logout Unsuccessful", err);
+        return res.status(500).json({error : "Logout Unsuccessful", error_message : err});
+    }
+}
+
+module.exports = { createUser, loginUser, logoutUser }
