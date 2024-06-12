@@ -9,7 +9,9 @@ export default {
     extend: {
       colors: {
         background : "#0D0E10",
-        linegrey : "#303233"
+        linegrey : "#303233",
+        subtext : "#8B8B8B",
+        subline : "#1D1F20"
       },
       fontFamily: {
         inrisans : ["'Inria Sans'", 'sans-serif']
