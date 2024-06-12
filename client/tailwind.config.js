@@ -11,7 +11,9 @@ export default {
         background : "#0D0E10",
         linegrey : "#303233",
         subtext : "#8B8B8B",
-        subline : "#1D1F20"
+        subline : "#1D1F20",
+        nametext : "#B4AEAE",
+        button_color : "#202629"
       },
       fontFamily: {
         inrisans : ["'Inria Sans'", 'sans-serif']

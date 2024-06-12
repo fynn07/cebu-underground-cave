@@ -8,9 +8,9 @@ function App() {
     <>
       <div className="h-screen bg-background px-8 pt-4 flex flex-col">
         <Navbar />
-        <div className="flex flex-1">
+        <div className="flex flex-1 overflow-y-hidden">
             <Sidebar />
-          <div className="flex-[3]">
+          <div className="flex-[3] overflow-y-auto">
             <Content />
           </div>
           <div className="flex-1">
