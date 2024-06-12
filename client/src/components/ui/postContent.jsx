@@ -1,10 +1,12 @@
+import {formatDate} from '../../utils/formatDate'
+
 const PostContent = (props) => {
     return (
         <div className="flex flex-col gap-2 py-6 border-b border-subline">
             <div className="flex gap-2">
                 <img className="w-10 h-10 rounded-full" src="/assets/test_profile.jpg" alt="" />
                 <div className="flex flex-col">
-                    <p className="font-inrisans text-subtext text-xs">4 Hours Ago</p>
+                    <p className="font-inrisans text-subtext text-xs">{formatDate(props.date)}</p>
                     <p className="font-inrisans text-nametext text-sm">{props.displayname}</p>
                 </div>
             </div>

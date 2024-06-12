@@ -29,7 +29,7 @@ const Content = () => {
             </div>
 
             {posts.map(post => 
-                <PostContent displayname={post.DisplayName} title={post.Title} 
+                <PostContent displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
                 content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} />
             )}
         </div>

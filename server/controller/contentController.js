@@ -8,8 +8,8 @@ const createPost = async(req, res) => {
 
     const AuthorId = req.user.Id;
 
-    if(!Title || !Content){
-        return res.status(400).json({error : "Title and Content Required"});
+    if(!Title){
+        return res.status(400).json({error : "Title Required"});
     }
 
     try {
