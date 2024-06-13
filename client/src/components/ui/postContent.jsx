@@ -14,7 +14,7 @@ const PostContent = (props) => {
             <p className="text-white font-inrisans text-2xl">{props.title}</p>
             <p className="text-subtext font-inrisans">{props.content}</p>
 
-            <div className="flex gap-3 pt-3">
+            <div className="flex gap-3 pt-3 items-center">
                 <button className="bg-button_color text-white text-sm flex items-center py-1 px-2 gap-2 rounded-xl">
                     <img className="w-3 h-3" src="/assets/like_post.png" alt="" />
                     {props.upvotes}
@@ -23,6 +23,7 @@ const PostContent = (props) => {
                     <img className="w-4 h-3" src="/assets/comment_icon.png" alt="" />
                     {props.commentcount}
                 </button>
+                <p className='text-subtext text-sm'>{props.genre}</p>
             </div>
         </div>
     )

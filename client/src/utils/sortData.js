@@ -1,4 +1,4 @@
-export const filterData = (data, filterType) => {
+export const sortData = (data, filterType) => {
     if (filterType === 'Newest') {
         return data.sort((a, b) => new Date(b.CreatedAt) - new Date(a.CreatedAt));
     }

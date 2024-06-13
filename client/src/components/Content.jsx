@@ -28,7 +28,7 @@ const Content = () => {
             <FilterContentSection filter={filter} setFilter={setFilter}/>
             {posts.map(post => 
                 <PostContent key={post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
-                content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} />
+                content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} />
             )}
         </div>
     )
