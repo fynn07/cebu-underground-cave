@@ -1,11 +1,12 @@
 import PostContent from "./ui/postContent"
 import { useFetchPost } from "../hooks/useFetchPosts"
-import { useState } from "react";
 import FilterContentSection from "./ui/filterContentSection";
+import { useGenre } from "../hooks/useGenre";
+import { useFilter } from "../hooks/useFilter";
 
 const Content = () => {
-    const [genre, setGenre] = useState('All');
-    const [filter, setFilter] = useState('Newest');
+    const {genre, setGenre} = useGenre();
+    const {filter, setFilter } = useFilter();
     const {posts, loading, error} = useFetchPost(filter, genre);
 
     //TODO: Add loading Screen
