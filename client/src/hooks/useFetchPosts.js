@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { fetchPosts } from '../services/api'
+import { fetchPosts } from '../services/api';
+import { filterData } from '../utils/filterData';
 
-export const useFetchPost = () => {
+export const useFetchPost = (filter) => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -10,7 +11,8 @@ export const useFetchPost = () => {
         const loadPosts = async() => {
             try {
                 const data = await fetchPosts();
-                setPosts(data);
+                const filtered_data = filterData(data, filter);
+                setPosts(filtered_data);
             } catch (err) {
                 setError(err);
                 console.error('Error Fetching Posts: ', err);
@@ -19,7 +21,7 @@ export const useFetchPost = () => {
             }
         }
         loadPosts();
-    }, []);
+    }, filter);
 
     return { posts, loading, error};
 }
