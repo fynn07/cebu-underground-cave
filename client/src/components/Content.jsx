@@ -4,7 +4,7 @@ import { useState } from "react";
 import FilterContentSection from "./ui/filterContentSection";
 
 const Content = () => {
-    const [filter, setFilter] = useState('Newesa');
+    const [filter, setFilter] = useState('Newest');
     const {posts, loading, error} = useFetchPost(filter);
 
     //TODO: Add loading Screen
@@ -27,7 +27,7 @@ const Content = () => {
         <div className="w-full h-full px-6 py-6 flex flex-col">
             <FilterContentSection filter={filter} setFilter={setFilter}/>
             {posts.map(post => 
-                <PostContent displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
+                <PostContent key={post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
                 content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} />
             )}
         </div>

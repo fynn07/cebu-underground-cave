@@ -21,7 +21,7 @@ export const useFetchPost = (filter) => {
             }
         }
         loadPosts();
-    }, filter);
+    }, [filter]);
 
     return { posts, loading, error};
 }
