@@ -4,8 +4,9 @@ import { useState } from "react";
 import FilterContentSection from "./ui/filterContentSection";
 
 const Content = () => {
+    const [genre, setGenre] = useState('All');
     const [filter, setFilter] = useState('Newest');
-    const {posts, loading, error} = useFetchPost(filter);
+    const {posts, loading, error} = useFetchPost(filter, genre);
 
     //TODO: Add loading Screen
     if(loading){
@@ -25,7 +26,7 @@ const Content = () => {
 
     return(
         <div className="w-full h-full px-6 py-6 flex flex-col">
-            <FilterContentSection filter={filter} setFilter={setFilter}/>
+            <FilterContentSection filter={filter} setFilter={setFilter} genre={genre} setGenre={setGenre}/>
             {posts.map(post => 
                 <PostContent key={post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
                 content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} />
