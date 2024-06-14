@@ -5,12 +5,17 @@ import NotFoundPage from './pages/NotFoundPage.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import './index.css'
+import PostPage from './pages/PostPage.jsx'
 
 const router = createBrowserRouter([
   {
-  path: '/',
-  element: <App />,
-  errorElement: <NotFoundPage />
+    path: '/',
+    element: <App />,
+    errorElement: <NotFoundPage />
+  },
+  {
+    path:'/:PostID',
+    element: <PostPage />
   }
 ])
 
