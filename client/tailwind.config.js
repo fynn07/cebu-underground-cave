@@ -13,7 +13,8 @@ export default {
         subtext : "#8B8B8B",
         subline : "#1D1F20",
         nametext : "#B4AEAE",
-        button_color : "#202629"
+        button_color : "#202629",
+        highlight : "#131618"
       },
       fontFamily: {
         inrisans : ["'Inria Sans'", 'sans-serif']

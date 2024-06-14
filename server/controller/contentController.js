@@ -44,5 +44,16 @@ const getPost = async (req, res) => {
     }
 }
 
+const getPostByID = async (req, res) => {
+    try{
+        const { id } = req.params;
+        const result = await pool.query(`SELECT * FROM "Post" WHERE "PostID" = $1`, [id]);
+        return res.json(result.rows[0]);
+    }catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
 
-module.exports = { createPost, getPost };
+
+module.exports = { createPost, getPost, getPostByID };
