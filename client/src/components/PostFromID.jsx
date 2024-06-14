@@ -1,5 +1,7 @@
 import { useFetchPostFromID } from "../hooks/useFetchPostFromID";
+import BackButton from "./ui/backButton";
 import PostContent from "./ui/postContent";
+import { Link } from "react-router-dom";
 
 const PostFromID = (props) => {
     const {post, loading, error} = useFetchPostFromID(props.id);
@@ -21,6 +23,7 @@ const PostFromID = (props) => {
 
     return(
         <div className="w-full h-full px-6 py-6 flex flex-col">
+            <BackButton />
             <PostContent key={post.PostID} postID = {post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
             content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} isclicked={true} />
         </div>
