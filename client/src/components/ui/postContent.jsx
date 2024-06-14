@@ -1,8 +1,9 @@
 import {formatDate} from '../../utils/formatDate'
+import { Link } from 'react-router-dom';
 
 const PostContent = (props) => {
     return (
-        <div className="flex flex-col gap-2 py-6 border-b border-subline hover:bg-highlight hover:cursor-pointer pl-2 rounded-xl">
+        <Link to="/" className="flex flex-col gap-2 py-6 border-b border-subline hover:bg-highlight hover:cursor-pointer pl-2 rounded-xl">
             <div className="flex gap-2">
                 <img className="w-10 h-10 rounded-full" src="/assets/test_profile.jpg" alt="" />
                 <div className="flex flex-col">
@@ -25,7 +26,7 @@ const PostContent = (props) => {
                 </button>
                 <p className='text-subtext text-sm'>{props.genre}</p>
             </div>
-        </div>
+        </Link>
     )
 }
 
