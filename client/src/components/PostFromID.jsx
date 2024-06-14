@@ -1,5 +1,6 @@
 import { useFetchPostFromID } from "../hooks/useFetchPostFromID";
 import BackButton from "./ui/backButton";
+import CommentInput from "./ui/commentInput";
 import PostContent from "./ui/postContent";
 import { Link } from "react-router-dom";
 
@@ -26,8 +27,8 @@ const PostFromID = (props) => {
             <BackButton />
             <PostContent key={post.PostID} postID = {post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
             content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} isclicked={true} />
+            <CommentInput/>
         </div>
-
     )
 }
 
