@@ -15,7 +15,7 @@ const createUser = async(req, res) => {
 
         return res.json(result.rows);
     } catch (err) {
-        console.error(err);
+        console.error("error from server");
         return res.status(500).json(err);
     }
 

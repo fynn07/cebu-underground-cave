@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast"
 import Adspace from "./components/Adspace"
 import Content from "./components/Content"
 import Navbar from "./components/Navbar"
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
       <div className="h-screen bg-background px-8 pt-4 flex flex-col">
+        <Toaster/>
         <Navbar setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow}/>
         <div className="flex flex-1 overflow-y-hidden">
             <Sidebar />

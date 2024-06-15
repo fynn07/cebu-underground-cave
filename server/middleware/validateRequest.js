@@ -29,23 +29,23 @@ const validateSignUpRequest = [
         
         try {
             const userExistsQuery = `SELECT COUNT(*) FROM "User" WHERE "Email" = $1`;
-            const { email_rows } = await pool.query(userExistsQuery, [Email]);
+            const emailResult = await pool.query(userExistsQuery, [Email]);
 
-            if (parseInt(email_rows[0].count) > 0) {
+            if (parseInt(emailResult.rows[0].count) > 0) {
                 return res.status(400).json({ error: "Email already exists" });
             }
 
             const displayNameExistsQuery = `SELECT COUNT(*) FROM "User" WHERE "DisplayName" = $1`;
-            const { name_rows } = await pool.query(displayNameExistsQuery, [DisplayName]); 
+            const displayNameResult = await pool.query(displayNameExistsQuery, [DisplayName]); 
 
-            if (parseInt(name_rows[0].count) > 0) {
+            if (parseInt(displayNameResult.rows[0].count) > 0) {
                 return res.status(400).json({ error: "Name already exists" });
             }
 
             next();
         } catch (err) {
             console.error(err);
-            res.status(500).json({ error: "Internal server error" });
+            res.status(500).json({ error: "Internal server error: Validation" });
         }
     }
 ];
