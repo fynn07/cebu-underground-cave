@@ -10,8 +10,8 @@ const Navbar = (props) => {
                     <h1 className="text-white font-inrisans text-3xl">Cebu Underground Cave</h1>
                 </div>
                 <div className="pr-6 flex items-center gap-12">
-                    <LoginButton/>
-                    <SignupButton setModal={props.setModal}/>
+                    <LoginButton setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>
+                    <SignupButton setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>
                 </div>
             </div>
         </div>

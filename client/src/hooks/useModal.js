@@ -4,5 +4,5 @@ export const useModal = () => {
     const [signupModalShow, setSignupModalShow] = useState(false);
     const [loginModalShow, setLoginModalShow] = useState(false);
 
-    return {signupModalShow, setSignupModalShow}
+    return {signupModalShow, loginModalShow, setSignupModalShow, setLoginModalShow}
 }

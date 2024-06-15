@@ -2,16 +2,17 @@ import Adspace from "./components/Adspace"
 import Content from "./components/Content"
 import Navbar from "./components/Navbar"
 import Sidebar from "./components/Sidebar"
+import LoginModal from "./components/ui/loginModal"
 import SignupModal from "./components/ui/signupModal"
 import { useModal } from "./hooks/useModal"
 
 function App() {
-  const {signupModalShow, setSignupModalShow} = useModal();
+  const {signupModalShow, loginModalShow, setSignupModalShow, setLoginModalShow} = useModal();
 
   return (
     <>
       <div className="h-screen bg-background px-8 pt-4 flex flex-col">
-        <Navbar setModal={setSignupModalShow}/>
+        <Navbar setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow}/>
         <div className="flex flex-1 overflow-y-hidden">
             <Sidebar />
           <div className="flex-[3] overflow-y-auto">
@@ -22,8 +23,8 @@ function App() {
           </div>
         </div>
       </div>
-        <SignupModal modal={signupModalShow} setModal={setSignupModalShow}/>
-
+        <SignupModal signupModalShow={signupModalShow} setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow}/>
+        <LoginModal loginModalShow={loginModalShow} setLoginModalShow={setLoginModalShow} setSignupModalShow={setSignupModalShow}/>
     </>
   )
 }
