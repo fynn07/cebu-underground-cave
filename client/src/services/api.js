@@ -13,3 +13,15 @@ export const fetchPostFromID = async(id) => {
     }
     return await data.json();
 }
+
+export const signupUser = async() => {
+    const data = await fetch('http://localhost:3400/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+
+        }) 
+    })
+}
