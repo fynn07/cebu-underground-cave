@@ -14,7 +14,8 @@ export default {
         subline : "#1D1F20",
         nametext : "#B4AEAE",
         button_color : "#202629",
-        highlight : "#131618"
+        highlight : "#131618",
+        select_highlight : "#757667"
       },
       fontFamily: {
         inrisans : ["'Inria Sans'", 'sans-serif']

@@ -1,7 +1,7 @@
 import LoginButton from "./ui/loginButton"
 import SignupButton from "./ui/signupButton"
 
-const Navbar = () => {
+const Navbar = (props) => {
     return(
         <div>
             <div className="flex justify-between items-center border-b-2 border-b-linegrey pb-3">
@@ -11,7 +11,7 @@ const Navbar = () => {
                 </div>
                 <div className="pr-6 flex items-center gap-12">
                     <LoginButton/>
-                    <SignupButton/>
+                    <SignupButton setModal={props.setModal}/>
                 </div>
             </div>
         </div>
