@@ -6,15 +6,17 @@ import Sidebar from "./components/Sidebar"
 import LoginModal from "./components/ui/loginModal"
 import SignupModal from "./components/ui/signupModal"
 import { useModal } from "./hooks/useModal"
+import { isLoggedIn } from "./hooks/useIsLoggedIn"
 
 function App() {
+  const {loggedIn, setLoggedIn} = isLoggedIn();
   const {signupModalShow, loginModalShow, setSignupModalShow, setLoginModalShow} = useModal();
 
   return (
     <>
       <div className="h-screen bg-background px-8 pt-4 flex flex-col">
         <Toaster/>
-        <Navbar setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow}/>
+        <Navbar loggedIn={loggedIn} setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow}/>
         <div className="flex flex-1 overflow-y-hidden">
             <Sidebar />
           <div className="flex-[3] overflow-y-auto">

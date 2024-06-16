@@ -38,12 +38,13 @@ export const loginUser = async (Email, Password) => {
             return { error: data.error };
         }
 
-        toast.success("Successfully Logged In");
-        
+
         Cookies.set('token', data.token, 
         {
             expires: 1
         })
+
+        window.location.reload();
 
         return data;
     } catch (error) {
@@ -75,10 +76,41 @@ export const signupUser = async (Email, DisplayName, Password, ConfirmPassword) 
             return data.error;
         }
 
-        toast.success("Successfully Signed Up");
+        Cookies.set('token', data.token, 
+        {
+            expires: 1
+        })
+
+        window.location.reload();
+
         return data;
     } catch (error) {
         console.error("There was an error", error);
         throw error; 
+    }
+}
+
+export const logoutUser = async() => {
+    try {
+        const response = await fetch('http://localhost:3400/logout', {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+            toast.error(data.error);
+            return data.error;
+        }
+
+        Cookies.remove('token');
+
+        window.location.reload();
+
+    } catch (error) {
+        console.error(err);
     }
 }

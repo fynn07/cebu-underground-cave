@@ -9,7 +9,7 @@ const LoginModal = (props) => {
                 <p className="">X</p>
             </div>
             <FlavorText header={"LOG IN"} subtext={"Welcome Back, Fellow Cebu underground enthusiast! Log in and share your story."}/>
-            <LoginForm setLoginModalShow={props.setLoginModalShow} setSignupModalShow={props.setSignupModalShow} />
+            <LoginForm setLoggedIn={props.setLoggedIn} setLoginModalShow={props.setLoginModalShow} setSignupModalShow={props.setSignupModalShow} />
         </div>
     )
 

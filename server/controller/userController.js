@@ -13,7 +13,16 @@ const createUser = async(req, res) => {
             [Email, passwordHash, DisplayName, ProfilePictureLink]
         );
 
-        return res.json(result.rows);
+        const user = result.rows[0];
+
+        const token = jwt.sign( {Id: user.UserID, Email : user.Email}, process.env.SECRET_KEY, {expiresIn : '1h'} );
+
+        res.cookie('token', token, {
+            maxAge : 3600000,
+            httpOnly: true
+        })
+
+        return res.status(200).json({message : "Signup Successful", token: token});
     } catch (err) {
         console.error("error from server");
         return res.status(500).json(err);
@@ -29,7 +38,7 @@ const loginUser = async(req, res) => {
 
         const user = result.rows[0];
 
-        const token = jwt.sign( {Id : user.UserID, Email : user.Email, test : "hey"}, process.env.SECRET_KEY, {expiresIn : '1h'} );
+        const token = jwt.sign( {Id : user.UserID, Email : user.Email }, process.env.SECRET_KEY, {expiresIn : '1h'} );
         
         res.cookie('token', token, {
             maxAge : 3600000,

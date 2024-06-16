@@ -15,12 +15,12 @@ const LoginForm = (props) => {
 
         <form onSubmit={handleRequest} className="px-4 flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-                <label for="email_field" className="text-white font-inrisans text-sm">Email</label>
-                <input onChange={(e) => setEmail(e.target.value)} type="text" name="Email" id="email_field" className="p-1 rounded-lg bg-linegrey text-white focus:outline-none" />
+                <label className="text-white font-inrisans text-sm">Email</label>
+                <input onChange={(e) => setEmail(e.target.value)} type="text" className="p-1 rounded-lg bg-linegrey text-white focus:outline-none" />
             </div>
             <div className="flex flex-col gap-2">
-                <label for="password_field" className="text-white font-inrisans text-sm">Password</label>
-                <input onChange={(e) => setPassword(e.target.value)} type="password" name="Password" id="password_field" className="p-1 rounded-lg bg-linegrey text-white focus:outline-none" />
+                <label className="text-white font-inrisans text-sm">Password</label>
+                <input onChange={(e) => setPassword(e.target.value)} type="password" className="p-1 rounded-lg bg-linegrey text-white focus:outline-none" />
             </div>
             <div className="flex items-center gap-2">
                 <p className="text-xs text-gray-400">Dont Have an Account? </p>
