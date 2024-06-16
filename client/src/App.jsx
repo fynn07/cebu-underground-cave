@@ -7,20 +7,24 @@ import LoginModal from "./components/ui/loginModal"
 import SignupModal from "./components/ui/signupModal"
 import { useModal } from "./hooks/useModal"
 import { isLoggedIn } from "./hooks/useIsLoggedIn"
+import PostFromID from "./components/PostFromID"
+import { useParams } from "react-router-dom"
 
-function App() {
-  const {loggedIn, setLoggedIn} = isLoggedIn();
+function App(props) {
+  const {loggedIn, name, rep, setLoggedIn} = isLoggedIn();
   const {signupModalShow, loginModalShow, setSignupModalShow, setLoginModalShow} = useModal();
+
+  const params = useParams();
 
   return (
     <>
       <div className="h-screen bg-background px-8 pt-4 flex flex-col">
         <Toaster/>
-        <Navbar loggedIn={loggedIn} setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow}/>
+        <Navbar displayName={name} rep={rep} loggedIn={loggedIn} setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow}/>
         <div className="flex flex-1 overflow-y-hidden">
             <Sidebar />
           <div className="flex-[3] overflow-y-auto">
-            <Content />
+            {props.isSinglePost ? <PostFromID id={params.PostID}/> : <Content />}
           </div>
           <div className="flex-1">
             <Adspace />

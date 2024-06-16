@@ -19,7 +19,6 @@ export const fetchPostFromID = async(id) => {
 
 export const loginUser = async (Email, Password) => {
     try {
-        console.log(Email, Password);
         const response = await fetch(`http://localhost:3400/login?`,{
             method: 'POST',
             headers: {
@@ -110,6 +109,26 @@ export const logoutUser = async() => {
 
         window.location.reload();
 
+    } catch (error) {
+        console.error(err);
+    }
+}
+
+export const getUser = async() => {
+    try {
+        const token = Cookies.get('token');
+        if(!token){
+            return;
+        }
+        const response = await fetch('http://localhost:3400/getUser', {
+            method : 'GET',
+            headers : {
+                'Authorization' : token
+            }
+        })
+
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.error(err);
     }

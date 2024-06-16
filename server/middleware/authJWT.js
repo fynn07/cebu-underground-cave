@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 
 //Middleware to provide user information to Posts 
 const authenticateJWT = (req, res, next) => {
-    const token = (req.header['Authentication']?.split(' ')[1] || req.cookies.token);
+    const token = req.headers.authorization;
 
+    console.log(token)
     if(!token){
         return res.status(401).json({error : "Access Denied. No Token Provided"});
     }

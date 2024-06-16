@@ -53,6 +53,19 @@ const loginUser = async(req, res) => {
     }
 }
 
+const getUser = async(req, res) => {
+    try {
+        const id = req.user.Id;
+
+        const result = await pool.query(`SELECT "DisplayName", "Rep" FROM "User" WHERE "UserID" = $1`, [id]);
+
+        return res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error("Internal Server Error", err);
+        return res.status(500).json( {error: "Internal Server Error", error_message : err} );
+    }
+}
+
 const logoutUser = async(req, res) => {
     try {
         res.clearCookie('token');
@@ -63,4 +76,4 @@ const logoutUser = async(req, res) => {
     }
 }
 
-module.exports = { createUser, loginUser, logoutUser }
+module.exports = { createUser, loginUser, getUser, logoutUser }
