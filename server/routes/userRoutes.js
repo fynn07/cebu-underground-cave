@@ -5,7 +5,7 @@ const { validateSignUpRequest, validateLoginRequest } = require('../middleware/v
 const router = express.Router();
 
 router.route('/signup').post(validateSignUpRequest, createUser);
-router.route('/login').get(validateLoginRequest, loginUser);
+router.route('/login').post(validateLoginRequest, loginUser);
 router.route('/logout').post(logoutUser);
 
 module.exports = router;

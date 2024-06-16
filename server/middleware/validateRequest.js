@@ -51,9 +51,8 @@ const validateSignUpRequest = [
 ];
 
 const validateLoginRequest = [
-    body('Email').isEmail().withMessage('Invalid Email Address'),
-
     async (req, res, next) => {
+        console.log(req);
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ error: errors.array()[0].msg });

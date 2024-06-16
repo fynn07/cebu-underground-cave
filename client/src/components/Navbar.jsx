@@ -1,6 +1,9 @@
 import LoginButton from "./ui/loginButton"
 import SignupButton from "./ui/signupButton"
 
+// make context different based on isLoggedIn state
+//check isLoggedIn Through cookie
+
 const Navbar = (props) => {
     return(
         <div>
