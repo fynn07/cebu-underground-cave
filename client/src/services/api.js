@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { toast } from "react-hot-toast";
 
 export const fetchPosts = async() => {
@@ -38,6 +39,12 @@ export const loginUser = async (Email, Password) => {
         }
 
         toast.success("Successfully Logged In");
+        
+        Cookies.set('token', data.token, 
+        {
+            expires: 1
+        })
+
         return data;
     } catch (error) {
         console.error("There was an error", error);

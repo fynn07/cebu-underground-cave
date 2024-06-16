@@ -20,7 +20,7 @@ const LoginForm = (props) => {
             </div>
             <div className="flex flex-col gap-2">
                 <label for="password_field" className="text-white font-inrisans text-sm">Password</label>
-                <input onChange={(e) => setPassword(e.target.value)} type="text" name="Password" id="password_field" className="p-1 rounded-lg bg-linegrey text-white focus:outline-none" />
+                <input onChange={(e) => setPassword(e.target.value)} type="password" name="Password" id="password_field" className="p-1 rounded-lg bg-linegrey text-white focus:outline-none" />
             </div>
             <div className="flex items-center gap-2">
                 <p className="text-xs text-gray-400">Dont Have an Account? </p>
