@@ -1,9 +1,24 @@
 import { useState } from "react";
 import BackButton from "./ui/backButton";
 import { postData } from "../hooks/usePostData";
+import { submitPost } from "../services/api";
+import { Navigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const CreatePost = () => {
-    const {title, content, handleTitle, handleContent, getCounterColor} = postData();
+    const {title, content, genre, handleGenre, handleTitle, handleContent, getCounterColor} = postData();
+    const [redirect, setRedirect] = useState(null);
+
+    const handleSubmit = async () => {
+        const response = await submitPost(title, content, genre);
+
+        toast.success("Post Created Successfully");
+        setRedirect(`/${response.id}`);
+    }
+
+    if (redirect) {
+        return <Navigate to={redirect} />;
+    }
 
     return (
         <div className="w-full h-full px-10 py-6 flex flex-col">
@@ -11,7 +26,7 @@ const CreatePost = () => {
             <div className="flex flex-col pt-4 pl-4">
                 <p className="text-white font-inrisans text-2xl">Create Post</p>
                 <div className="">
-                    <select className="text-center bg-transparent text-white mt-4 py-2 border-subtext appearance-none rounded-lg dec border font-inrisans focus:outline-none">
+                    <select value={genre} onChange={handleGenre} className="text-center bg-transparent text-white mt-4 py-2 border-subtext appearance-none rounded-lg dec border font-inrisans focus:outline-none">
                         <option value="General" selected>General</option>
                         <option value="Music">Music</option>
                         <option value="Fashion">Fashion</option>
@@ -46,7 +61,7 @@ const CreatePost = () => {
                 </div>
 
                 <div className="py-10 pr-6 text-right">
-                    <button className="text-white text-center py-2 px-8 bg-linegrey font-inrisans rounded-lg">Post</button>
+                    <button onClick={() => handleSubmit()} className="text-white text-center py-2 px-8 bg-linegrey font-inrisans rounded-lg hover:cursor-pointer">Post</button>
                 </div>
             </div>
         </div>

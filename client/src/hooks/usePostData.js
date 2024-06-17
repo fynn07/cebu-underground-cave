@@ -3,6 +3,7 @@ import { useState } from "react";
 export const postData = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [genre, setGenre] = useState("General");
 
     const handleTitle = (e) => {
         if (e.length <= 100) {
@@ -16,9 +17,13 @@ export const postData = () => {
         }
     }
 
+    const handleGenre = (e) => {
+        setGenre(e.target.value);
+    } 
+
     const getCounterColor = (length, max) => {
         return length >= max ? "text-red-500" : "text-white";
     }
 
-    return {title, content, handleTitle, handleContent, getCounterColor}
+    return {title, content, genre, handleGenre, handleTitle, handleContent, getCounterColor}
 }

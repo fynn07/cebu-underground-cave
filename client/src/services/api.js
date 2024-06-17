@@ -17,6 +17,42 @@ export const fetchPostFromID = async(id) => {
     return await data.json();
 }
 
+export const submitPost = async(Title, Content, Genre) => {
+    const token = Cookies.get('token');
+
+    if(!token){
+        return;
+    }
+    try {
+        const response = await fetch(`http://localhost:3400/post`, {
+            method: 'POST',
+            headers: {
+                'Authorization' : token,
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify({
+                Title,
+                Content,
+                Genre,
+                ImageLink : 'null'
+            })
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+            toast.error(data.error || 'An error occured');
+            return data.error;
+        }
+
+        return data;
+        
+    } catch (error) {
+        console.log('there was an error', error);
+    }
+
+}
+
 export const loginUser = async (Email, Password) => {
     try {
         const response = await fetch(`http://localhost:3400/login?`,{

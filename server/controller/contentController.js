@@ -14,11 +14,11 @@ const createPost = async(req, res) => {
 
     try {
         const result = await pool.query(
-            `INSERT INTO "Post" ("Title", "Content", "ImageLink", "Genre", "AuthorID") VALUES ($1, $2, $3, $4, $5)`,
+            `INSERT INTO "Post" ("Title", "Content", "ImageLink", "Genre", "AuthorID") VALUES ($1, $2, $3, $4, $5) RETURNING *`,
             [Title, Content, ImageLink, Genre, AuthorId]
         );
 
-        return res.json({message : "Post successful"});
+        return res.json({message : "Post successful", id : result.rows[0].PostID});
 
     } catch (err) {
         console.error(err);
