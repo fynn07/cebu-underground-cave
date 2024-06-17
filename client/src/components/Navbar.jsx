@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { logoutUser } from "../services/api"
 import LoginButton from "./ui/loginButton"
 import SignupButton from "./ui/signupButton"
@@ -15,6 +16,10 @@ const Navbar = (props) => {
 
     const logged_in = (
         <div className="flex gap-3 pr-3 ">
+            <Link to="/submit" className="flex items-center gap-2 hover:cursor-pointer">
+                <img className="w-4" src="/assets/plus_icon.png" alt="plus icon" />
+                <p className="text-subtext font-inrisans pr-6">Create Post</p>
+            </Link>
             <div className="flex flex-col items-center">
                 <p className="text-white font-inrisans">{props.displayName}</p>
                 <p className="text-subtext font-inrisans text-sm">{props.rep} Rep</p>

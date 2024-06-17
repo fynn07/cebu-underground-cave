@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import './index.css'
 import PostPage from './pages/PostPage.jsx'
+import CreatePostPage from './pages/createPostPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path:'/:PostID',
     element: <PostPage />
+  },
+  {
+    path:'/submit',
+    element: <CreatePostPage />
   }
 ])
 
