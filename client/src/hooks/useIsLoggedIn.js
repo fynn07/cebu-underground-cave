@@ -9,7 +9,6 @@ export const isLoggedIn = () => {
 
     const fetchUser = async() => {
         const user = await getUser();
-        console.log(user);
         setName(user.DisplayName);
         setRep(user.Rep);
     }

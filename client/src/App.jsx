@@ -11,7 +11,7 @@ import PostFromID from "./components/PostFromID"
 import { useParams } from "react-router-dom"
 
 function App(props) {
-  const {loggedIn, name, rep, setLoggedIn} = isLoggedIn();
+  const {loggedIn, name, rep} = isLoggedIn();
   const {signupModalShow, loginModalShow, setSignupModalShow, setLoginModalShow} = useModal();
 
   const params = useParams();

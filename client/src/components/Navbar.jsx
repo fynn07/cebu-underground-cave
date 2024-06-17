@@ -6,7 +6,6 @@ import SignupButton from "./ui/signupButton"
 //check isLoggedIn Through cookie
 
 const Navbar = (props) => {
-    console.log(props);
     const not_logged_in = (
         <div className="pr-6 flex items-center gap-12">
             <LoginButton setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>

@@ -8,6 +8,7 @@ const validateSignUpRequest = [
     body('Password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
     body('ConfirmPassword').exists().withMessage('Confirm password is required'),
     body('DisplayName').isLength({ min: 5 }).withMessage('Display name must be at least 5 characters long'),
+    body('DisplayName').isLength({max : 15}).withMessage('Display name must be less than 20 characters long'),
 
     // Custom validation logic
     async (req, res, next) => {

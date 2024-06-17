@@ -40,7 +40,7 @@ export const loginUser = async (Email, Password) => {
 
         Cookies.set('token', data.token, 
         {
-            expires: 1
+            expires: 1/24
         })
 
         window.location.reload();
@@ -77,7 +77,7 @@ export const signupUser = async (Email, DisplayName, Password, ConfirmPassword) 
 
         Cookies.set('token', data.token, 
         {
-            expires: 1
+            expires: 1/24
         })
 
         window.location.reload();
