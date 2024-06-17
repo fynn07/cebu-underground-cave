@@ -6,14 +6,13 @@ import { Navigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 const CreatePost = () => {
-    const {title, content, genre, handleGenre, handleTitle, handleContent, getCounterColor} = postData();
-    const [redirect, setRedirect] = useState(null);
+    const {title, content, genre, redirect, handleGenre, handleTitle, handleContent, getCounterColor, setRedirect} = postData();
 
     const handleSubmit = async () => {
         const response = await submitPost(title, content, genre);
-
-        toast.success("Post Created Successfully");
-        setRedirect(`/${response.id}`);
+        if(response.id){
+            setRedirect(`/${response.id}`);
+        }
     }
 
     if (redirect) {
@@ -27,7 +26,7 @@ const CreatePost = () => {
                 <p className="text-white font-inrisans text-2xl">Create Post</p>
                 <div className="">
                     <select value={genre} onChange={handleGenre} className="text-center bg-transparent text-white mt-4 py-2 border-subtext appearance-none rounded-lg dec border font-inrisans focus:outline-none">
-                        <option value="General" selected>General</option>
+                        <option value="General">General</option>
                         <option value="Music">Music</option>
                         <option value="Fashion">Fashion</option>
                         <option value="Art">Art</option>

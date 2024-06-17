@@ -24,7 +24,7 @@ const Content = () => {
             </div>
         )
     }
-
+    
     return(
         <div className="w-full h-full px-6 py-6 flex flex-col">
             <FilterContentSection filter={filter} setFilter={setFilter} genre={genre} setGenre={setGenre}/>

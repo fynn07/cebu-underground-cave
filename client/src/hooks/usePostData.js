@@ -4,6 +4,7 @@ export const postData = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [genre, setGenre] = useState("General");
+    const [redirect, setRedirect] = useState(null);
 
     const handleTitle = (e) => {
         if (e.length <= 100) {
@@ -25,5 +26,5 @@ export const postData = () => {
         return length >= max ? "text-red-500" : "text-white";
     }
 
-    return {title, content, genre, handleGenre, handleTitle, handleContent, getCounterColor}
+    return {title, content, genre, redirect, handleGenre, handleTitle, handleContent, getCounterColor, setRedirect}
 }
