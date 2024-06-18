@@ -5,7 +5,6 @@ import NotFoundPage from './pages/NotFoundPage.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import './index.css'
-import PostPage from './pages/PostPage.jsx'
 import CreatePostPage from './pages/createPostPage.jsx'
 
 const router = createBrowserRouter([
@@ -16,7 +15,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/:PostID',
-    element: <PostPage />
+    element: <App isSinglePost={true} />
   },
   {
     path:'/submit',

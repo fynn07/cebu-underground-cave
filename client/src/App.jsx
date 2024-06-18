@@ -19,8 +19,8 @@ function App(props) {
 
   return (
     <>
-      <div className="h-screen bg-background px-8 pt-4 flex flex-col">
         <Toaster />
+      <div className="h-screen bg-background px-8 pt-4 flex flex-col">
         <Navbar displayName={name} rep={rep} loggedIn={loggedIn} setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow} />
         <div className="flex flex-1 overflow-y-hidden">
           <Sidebar />

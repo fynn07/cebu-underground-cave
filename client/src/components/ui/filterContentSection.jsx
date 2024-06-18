@@ -10,7 +10,7 @@ const FilterContentSection = (props) => {
     return (
         <div className="flex gap-8 border-b border-subline pb-3">
             <select
-                className="bg-transparent text-sm text-subtext font-inrisans focus:outline-none"
+                className="bg-transparent text-sm text-subtext font-inrisans hover:cursor-pointer focus:outline-none"
                 value={props.filter}
                 onChange={handleFilterChange}
             >
@@ -19,7 +19,7 @@ const FilterContentSection = (props) => {
                 <option value='Best'>Best</option>
             </select>
             <select
-                className="bg-transparent text-sm text-subtext font-inrisans text-center focus:outline-none"
+                className="bg-transparent text-sm text-subtext font-inrisans text-center hover:cursor-pointer focus:outline-none"
                 value={props.genre}
                 onChange={handleGenreChange}
             >

@@ -44,6 +44,30 @@ const getPost = async (req, res) => {
     }
 }
 
+const createComment = async(req, res) => {
+    const { Content, PostedFromID } = req.body;
+
+    const AuthorID = req.user.Id;
+
+    if(!Content){
+        return res.status(400).json({error : "Content Required"});
+    }
+
+    try {
+        const result = await pool.query(
+            `INSERT INTO "Comment" ("Content", "AuthorID" , "PostedFromID") VALUES ($1, $2, $3)`,
+            [Content, AuthorID, PostedFromID]
+        );
+
+        return res.status(200).json({ message : "Comment Successful" });
+        
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({error : "Internal Server Error"}, err); 
+    }
+
+}
+
 const getPostByID = async (req, res) => {
     try {
         const { id } = req.params;
@@ -66,4 +90,4 @@ const getPostByID = async (req, res) => {
 
 
 
-module.exports = { createPost, getPost, getPostByID };
+module.exports = { createPost, getPost, getPostByID, createComment };

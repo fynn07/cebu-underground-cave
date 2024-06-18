@@ -53,7 +53,36 @@ export const submitPost = async(Title, Content, Genre) => {
 
 }
 
-export const loginUser = async (Email, Password) => {
+export const submitComment = async(Token, Content, PostedFromID) => {
+    try {
+        const response = await fetch('http://localhost:3400/comment', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization' : Token
+            },
+            body : JSON.stringify({
+                Content,
+                PostedFromID
+            })
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+            toast.error(data.error || 'An error occured');
+            return data.error;
+        }
+
+        toast.success(data.message);
+        return data;
+        
+    } catch (err) {
+        console.log('there was an error', err);
+    }
+}
+
+export const loginUser = async(Email, Password) => {
     try {
         const response = await fetch(`http://localhost:3400/login?`,{
             method: 'POST',
