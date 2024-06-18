@@ -13,7 +13,7 @@ const Content = () => {
     if(loading){
         return(
             <div>
-                <h1 className="text-white">LOADING ITEMS</h1>
+                
             </div>
         )
     }

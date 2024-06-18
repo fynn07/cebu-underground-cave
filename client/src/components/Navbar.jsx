@@ -16,10 +16,12 @@ const Navbar = (props) => {
 
     const logged_in = (
         <div className="flex gap-3 pr-3 ">
-            <Link to="/submit" className="flex items-center gap-2 hover:cursor-pointer">
-                <img className="w-4" src="/assets/plus_icon.png" alt="plus icon" />
-                <p className="text-subtext font-inrisans pr-6">Create Post</p>
+            <div className="flex items-center">
+            <Link to="/submit" className="flex items-center justify-center mr-6 py-2 hover:cursor-pointer bg-gray-200 rounded-lg">
+                <p className="text-black text-sm font-inrisans px-4 text-center">Create Post</p>
             </Link>
+
+            </div>
             <div className="flex flex-col items-center">
                 <p className="text-white font-inrisans">{props.displayName}</p>
                 <p className="text-subtext font-inrisans text-sm">{props.rep} Rep</p>

@@ -53,6 +53,26 @@ export const submitPost = async(Title, Content, Genre) => {
 
 }
 
+export const fetchComments = async (PostedFromID) => {
+    try {
+        const response = await fetch(`http://localhost:3400/comment?PostedFromID=${PostedFromID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Fetch error:', error);
+        throw error;
+    }
+};
+
 export const submitComment = async(Token, Content, PostedFromID) => {
     try {
         const response = await fetch('http://localhost:3400/comment', {
@@ -74,7 +94,7 @@ export const submitComment = async(Token, Content, PostedFromID) => {
             return data.error;
         }
 
-        toast.success(data.message);
+        window.location.reload();
         return data;
         
     } catch (err) {
@@ -196,5 +216,15 @@ export const getUser = async() => {
         return data;
     } catch (error) {
         console.error(err);
+    }
+}
+
+export const getAllUsers = async() => {
+    try {
+        const response = await fetch('http://localhost:3400/users');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error); 
     }
 }

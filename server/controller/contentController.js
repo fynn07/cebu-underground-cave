@@ -44,29 +44,57 @@ const getPost = async (req, res) => {
     }
 }
 
-const createComment = async(req, res) => {
-    const { Content, PostedFromID } = req.body;
+const getComments = async(req, res) => {
+    const { PostedFromID } = req.query;
 
+    try {
+        const result = await pool.query(`
+            SELECT
+                c.*,
+                u."DisplayName",
+                u."ProfilePictureLink"
+            FROM "Comment" c
+            JOIN "User" u ON c."AuthorID" = u."UserID" 
+            WHERE c."PostedFromID" = $1
+        `, [PostedFromID]);
+        res.json(result.rows);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+const createComment = async (req, res) => {
+    const { Content, PostedFromID } = req.body;
     const AuthorID = req.user.Id;
 
-    if(!Content){
-        return res.status(400).json({error : "Content Required"});
+    if (!Content) {
+        return res.status(400).json({ error: "Content Required" });
     }
 
     try {
-        const result = await pool.query(
-            `INSERT INTO "Comment" ("Content", "AuthorID" , "PostedFromID") VALUES ($1, $2, $3)`,
+        await pool.query('BEGIN');
+
+        await pool.query(
+            `INSERT INTO "Comment" ("Content", "AuthorID", "PostedFromID") VALUES ($1, $2, $3)`,
             [Content, AuthorID, PostedFromID]
         );
 
-        return res.status(200).json({ message : "Comment Successful" });
-        
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({error : "Internal Server Error"}, err); 
-    }
+        await pool.query(
+            `UPDATE "Post" SET "CommentCount" = "CommentCount" + 1 WHERE "PostID" = $1`,
+            [PostedFromID]
+        );
 
-}
+        await pool.query('COMMIT');
+
+        return res.status(200).json({ message: "Comment Successful" });
+    } catch (err) {
+        await pool.query('ROLLBACK');
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+};
 
 const getPostByID = async (req, res) => {
     try {
@@ -88,6 +116,16 @@ const getPostByID = async (req, res) => {
     }
 }
 
+const getAllUsers = async(req, res) => {
+    try {
+       const result = await pool.query(`SELECT * FROM "User"`);
+       return res.json(result.rows); 
+    } catch (error) {
+       console.error(error);
+       res.status(500).json({ error : "Internal Server Error" }); 
+    }
+}
 
 
-module.exports = { createPost, getPost, getPostByID, createComment };
+
+module.exports = { createPost, getPost, getPostByID, getComments, createComment, getAllUsers };

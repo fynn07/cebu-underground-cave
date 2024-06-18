@@ -1,20 +1,25 @@
+import { useFetchComments } from "../hooks/useFetchComments";
 import { useFetchPostFromID } from "../hooks/useFetchPostFromID";
 import BackButton from "./ui/backButton";
 import CommentInput from "./ui/commentInput";
+import PostComment from "./ui/postComment";
 import PostContent from "./ui/postContent";
 import { Link } from "react-router-dom";
 
 const PostFromID = (props) => {
     const {post, loading, error} = useFetchPostFromID(props.id);
+    const {comments, comment_loading, comment_error} = useFetchComments(props.id);
+
+    console.log(comments);
     //TODO: Add loading Screen
-    if(loading){
+    if(loading || comment_loading){
         return(
             <div>
-                <h1 className="text-white">LOADING ITEMS</h1>
+
             </div>
         )
     }
-    if(error){
+    if(error || comment_error){
         return(
             <div>
                 <h1>{error}</h1>
@@ -28,6 +33,11 @@ const PostFromID = (props) => {
             <PostContent key={post.PostID} postID = {post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
             content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} isclicked={true} />
             <CommentInput/>
+
+            {comments.map(comment => <PostComment content={comment.Content} date={comment.CreatedAt} displayName={comment.DisplayName} 
+                profilePictureLink={comment.ProfilePictureLink} upvotes={comment.Upvotes} />)}
+
+
         </div>
     )
 }

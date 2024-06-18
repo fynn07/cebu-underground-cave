@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { submitComment } from "../../services/api";
 
 const CommentInput = () => {
@@ -17,11 +17,10 @@ const CommentInput = () => {
         }
 
         const result = await submitComment(token, comment, PostID);
-        console.log(result);
     }
 
     return (
-        <form onSubmit={handleClick} className="px-2 pb-6 border-b border-subline" action="" method="post">
+        <form onSubmit={handleClick} className="px-2 pb-6" action="" method="post">
             <input onChange={(e) => setComment(e.target.value)} className="w-full h-10 p-4 rounded-xl bg-linegrey text-subtext focus:text-white focus:outline-select_highlight" 
             placeholder="Add a Comment" type="text" name="" id=""/>
         </form>
