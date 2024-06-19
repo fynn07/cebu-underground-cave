@@ -41,7 +41,7 @@ const Adspace = () => {
                 />
             </div>
             <div>
-                {filteredUsers.map(user => <UserBar key={user.id} displayName={user.DisplayName} />)}
+                {filteredUsers.map(user => <UserBar key={user.id} displayName={user.DisplayName} rep={user.Rep} />)}
             </div>
         </div>
     );
