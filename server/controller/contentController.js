@@ -1,3 +1,4 @@
+const { createImageLink } = require('../S3/client');
 const pool = require('../config/database');
 const jwt = require('jsonwebtoken');
 
@@ -29,7 +30,7 @@ const createPost = async(req, res) => {
 //FETCH
 const getPost = async (req, res) => {
     try {
-        const result = await pool.query(`
+        const results = await pool.query(`
             SELECT 
                 p.*, 
                 u."DisplayName", 
@@ -37,7 +38,15 @@ const getPost = async (req, res) => {
             FROM "Post" p
             JOIN "User" u ON p."AuthorID" = u."UserID"
         `);
-        res.json(result.rows);
+        
+        for(const result of results.rows){
+            link = result.ProfilePictureLink;
+            if(link === "Default" || !link){
+                continue;
+            }
+            result.ProfilePictureLink = await createImageLink(link);
+        }
+        res.json(results.rows);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Internal Server Error" });
@@ -48,7 +57,7 @@ const getComments = async(req, res) => {
     const { PostedFromID } = req.query;
 
     try {
-        const result = await pool.query(`
+        const results = await pool.query(`
             SELECT
                 c.*,
                 u."DisplayName",
@@ -57,7 +66,16 @@ const getComments = async(req, res) => {
             JOIN "User" u ON c."AuthorID" = u."UserID" 
             WHERE c."PostedFromID" = $1
         `, [PostedFromID]);
-        res.json(result.rows);
+        
+        for(const result of results.rows){
+            link = result.ProfilePictureLink;
+            if(link === "Default" || !link){
+                continue;
+            }
+            result.ProfilePictureLink = await createImageLink(link);
+        }
+
+        res.json(results.rows);
 
     } catch (err) {
         console.error(err);
@@ -109,6 +127,12 @@ const getPostByID = async (req, res) => {
         WHERE p."PostID" = $1
         `, [id]);
 
+        link = result.rows[0].ProfilePictureLink;
+        if(link === "Default" || !link){
+            return res.json(result.rows[0]);
+        }
+        result.rows[0].ProfilePictureLink = await createImageLink(link);
+
         return res.json(result.rows[0]);
     } catch (err) {
         console.error(err);
@@ -118,14 +142,21 @@ const getPostByID = async (req, res) => {
 
 const getAllUsers = async(req, res) => {
     try {
-       const result = await pool.query(`SELECT * FROM "User"`);
-       return res.json(result.rows); 
+       const results = await pool.query(`SELECT * FROM "User"`);
+
+        for(const result of results.rows){
+            link = result.ProfilePictureLink;
+            if(link === "Default" || !link){
+                continue;
+            }
+            result.ProfilePictureLink = await createImageLink(link);
+        }
+
+       return res.json(results.rows); 
     } catch (error) {
        console.error(error);
        res.status(500).json({ error : "Internal Server Error" }); 
     }
 }
-
-
 
 module.exports = { createPost, getPost, getPostByID, getComments, createComment, getAllUsers };

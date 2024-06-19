@@ -1,13 +1,28 @@
 // ProfileModal.js
+import React, { useRef } from 'react';
+
 const ProfileModal = ({ show, onClose, onLogout, onChangeProfilePicture }) => {
+    const fileInputRef = useRef(null);
+
     if (!show) return null;
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            onChangeProfilePicture(file);
+        }
+    };
+
+    const handleChangeProfilePictureClick = () => {
+        fileInputRef.current.click();
+    };
 
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white font-inrisans rounded-lg p-4">
                 <button
                     className="block w-full text-center p-2 hover:bg-gray-200"
-                    onClick={onChangeProfilePicture}
+                    onClick={handleChangeProfilePictureClick}
                 >
                     Change Profile Picture
                 </button>
@@ -23,6 +38,13 @@ const ProfileModal = ({ show, onClose, onLogout, onChangeProfilePicture }) => {
                 >
                     Close
                 </button>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                />
             </div>
         </div>
     );

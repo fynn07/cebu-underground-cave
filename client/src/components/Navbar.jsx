@@ -5,6 +5,7 @@ import SignupButton from "./ui/signupButton"
 import ProfileModal from "./ui/profileModal";
 import { useState } from "react";
 import { useHandleProfileModal } from "../hooks/useHandleProfileModal";
+import { customProfilePicture } from "../utils/customProfilePicture";
 // make context different based on isLoggedIn state
 //check isLoggedIn Through cookie
 const Navbar = (props) => {
@@ -31,7 +32,7 @@ const Navbar = (props) => {
             <img
                 onClick={handleProfileClick}
                 className="w-10 h-10 rounded-full hover:cursor-pointer"
-                src="/assets/test_profile.jpg"
+                src={customProfilePicture(props.profilePicture)}
                 alt=""
             />
         </div>

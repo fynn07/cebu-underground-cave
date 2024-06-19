@@ -10,7 +10,6 @@ const PostFromID = (props) => {
     const {post, loading, error} = useFetchPostFromID(props.id);
     const {comments, comment_loading, comment_error} = useFetchComments(props.id);
 
-    console.log(comments);
     //TODO: Add loading Screen
     if(loading || comment_loading){
         return(
@@ -31,11 +30,11 @@ const PostFromID = (props) => {
         <div className="w-full h-full px-6 py-6 flex flex-col">
             <BackButton />
             <PostContent key={post.PostID} postID = {post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
-            content={post.Content} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} isclicked={true} />
+            content={post.Content} profilePicture={post.ProfilePictureLink} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} isclicked={true} />
             <CommentInput/>
 
-            {comments.map(comment => <PostComment content={comment.Content} date={comment.CreatedAt} displayName={comment.DisplayName} 
-                profilePictureLink={comment.ProfilePictureLink} upvotes={comment.Upvotes} />)}
+            {comments.map(comment => <PostComment key={comment.CommentID} content={comment.Content} date={comment.CreatedAt} displayName={comment.DisplayName} 
+                profilePicture={comment.ProfilePictureLink} upvotes={comment.Upvotes} />)}
 
 
         </div>

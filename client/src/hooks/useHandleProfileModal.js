@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { logoutUser } from "../services/api";
+import { changeProfilePicture, logoutUser } from "../services/api";
 
 export const useHandleProfileModal = () => {
     const [showProfileModal, setShowProfileModal] = useState(false);    
@@ -17,9 +17,14 @@ export const useHandleProfileModal = () => {
         setShowProfileModal(false);
     };
 
-    const handleChangeProfilePicture = () => {
-        // Add logic to change profile picture
+    const handleChangeProfilePicture = async (file) => {
+        const formData = new FormData();
+        formData.append('Image', file);
+
+        const response = await changeProfilePicture(formData);
+        
         setShowProfileModal(false);
+        window.location.reload();
     };
 
     return {showProfileModal, handleProfileClick, handleCloseModal, handleLogout, handleChangeProfilePicture}

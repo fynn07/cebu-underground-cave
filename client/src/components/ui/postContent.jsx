@@ -1,11 +1,13 @@
+import { customProfilePicture } from '../../utils/customProfilePicture';
 import { formatDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
 
 const PostContent = (props) => {
+
     const content = (
         <div>
             <div className="flex gap-2">
-                <img className="w-10 h-10 rounded-full" src="/assets/test_profile.jpg" alt="" />
+                <img className="w-10 h-10 rounded-full" src={customProfilePicture(props.profilePicture)} alt="" />
                 <div className="flex flex-col">
                     <p className="font-inrisans text-subtext text-xs">{formatDate(props.date)}</p>
                     <p className="font-inrisans text-nametext text-sm">{props.displayname}</p>

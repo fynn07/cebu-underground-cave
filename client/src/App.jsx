@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom"
 import CreatePost from "./components/createPost"
 
 function App(props) {
-  const { loggedIn, name, rep } = isLoggedIn();
+  const { loggedIn, name, rep, profilePicture } = isLoggedIn();
   const { signupModalShow, loginModalShow, setSignupModalShow, setLoginModalShow } = useModal();
 
   const params = useParams();
@@ -21,7 +21,7 @@ function App(props) {
     <>
         <Toaster />
       <div className="h-screen bg-background px-8 pt-4 flex flex-col">
-        <Navbar displayName={name} rep={rep} loggedIn={loggedIn} setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow} />
+        <Navbar displayName={name} rep={rep} loggedIn={loggedIn} setSignupModalShow={setSignupModalShow} profilePicture={profilePicture} setLoginModalShow={setLoginModalShow} />
         <div className="flex flex-1 overflow-y-hidden">
           <Sidebar />
           <div className="flex-[3] overflow-y-auto">

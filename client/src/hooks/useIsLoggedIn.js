@@ -6,11 +6,13 @@ export const isLoggedIn = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [name, setName] = useState('');
     const [rep, setRep] = useState(0);
+    const [profilePicture, setProfilePicture] = useState("");
 
     const fetchUser = async() => {
         const user = await getUser();
         setName(user.DisplayName);
         setRep(user.Rep);
+        setProfilePicture(user.ProfilePictureLink)
     }
 
     useEffect(() => {
@@ -25,5 +27,5 @@ export const isLoggedIn = () => {
         }
     }, [loggedIn])
 
-    return { loggedIn, name, rep, setLoggedIn }
+    return { loggedIn, name, rep, profilePicture, setLoggedIn }
 }

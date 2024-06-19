@@ -1,10 +1,10 @@
+import { customProfilePicture } from "../../utils/customProfilePicture";
 import { formatDate } from "../../utils/formatDate";
-
 const PostComment = (props) => {
     return (
         <div className="px-8 my-4 border-l-2 border-gray-400">
             <div className="flex gap-2">
-                <img className="w-8 h-8 rounded-full" src="/assets/test_profile.jpg" alt="" />
+                <img className="w-8 h-8 rounded-full" src={customProfilePicture(props.profilePicture)} alt="" />
                 <div className="flex flex-col">
                     <p className="font-inrisans text-subtext text-xs">{formatDate(props.date)}</p>
                     <p className="font-inrisans text-nametext text-sm">{props.displayName}</p>

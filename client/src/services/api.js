@@ -228,3 +228,25 @@ export const getAllUsers = async() => {
         console.error(error); 
     }
 }
+
+export const changeProfilePicture = async(formData) => {
+    const token = Cookies.get('token');
+
+    if(!token){
+        console.log("NO TOKEN");
+    }
+    try {
+        const response = await fetch('http://localhost:3400/changeProfilePicture', {
+            method : 'POST',
+            headers : {
+                'Authorization' : token,
+            },
+            body : formData
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+}
