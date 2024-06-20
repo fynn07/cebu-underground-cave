@@ -1,8 +1,11 @@
 import { customProfilePicture } from '../../utils/customProfilePicture';
 import { formatDate } from '../../utils/formatDate';
 import { Link } from 'react-router-dom';
+import LikeButton from './likeButton';
 
 const PostContent = (props) => {
+
+    //Put into props if user has liked the post, this will change the like button
 
     const content = (
         <div>
@@ -17,10 +20,7 @@ const PostContent = (props) => {
             <img className='px-2 rounded-xl' src={props.image} alt="" />
             <p className="text-subtext font-inrisans mt-1">{props.content}</p>
             <div className="flex gap-3 pt-3 items-center">
-                <button className="bg-button_color text-white text-sm flex items-center py-1 px-2 gap-2 rounded-xl">
-                    <img className="w-3 h-3" src="/assets/like_post.png" alt="" />
-                    {props.upvotes}
-                </button>
+                <LikeButton upvotes={props.upvotes} hasLiked={props.hasLiked} postID={props.postID}/>
                 <button className="bg-button_color text-white text-sm flex items-center py-1 px-2 gap-2 rounded-xl">
                     <img className="w-4 h-3" src="/assets/comment_icon.png" alt="" />
                     {props.commentcount}

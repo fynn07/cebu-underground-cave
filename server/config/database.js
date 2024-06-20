@@ -49,6 +49,18 @@ const initializeDB = async () => {
         )
     `;
 
+    let createLikeQuery = `
+        CREATE TABLE IF NOT EXISTS "Likes" (
+            "LikeID" SERIAL PRIMARY KEY,
+            "PostID" INT NOT NULL,
+            "UserID" INT NOT NULL,
+            "CreatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY ("PostID") REFERENCES "Post"("PostID"),
+            FOREIGN KEY ("UserID") REFERENCES "User"("UserID"),
+            UNIQUE ("PostID", "UserID")
+        )
+    `;
+
     try {
         await pool.query(createUserQuery);
     } catch (err) {
@@ -67,6 +79,13 @@ const initializeDB = async () => {
         await pool.query(createCommentQuery);
     } catch (err) {
         console.error("Error Creating Comment Table:", err);
+        return;
+    }
+
+    try {
+        await pool.query(createLikeQuery);
+    } catch (err) {
+        console.error("Error Creating Like Table:", err);
         return;
     }
 

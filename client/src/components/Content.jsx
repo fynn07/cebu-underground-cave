@@ -29,7 +29,7 @@ const Content = () => {
         <div className="w-full h-full px-6 py-6 flex flex-col">
             <FilterContentSection filter={filter} setFilter={setFilter} genre={genre} setGenre={setGenre}/>
             {posts.map(post => 
-                <PostContent key={post.PostID} postID = {post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
+                <PostContent key={post.PostID} postID = {post.PostID} hasLiked={post.hasLiked} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
                 content={post.Content} image={post.ImageLink} profilePicture= {post.ProfilePictureLink} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} isclicked={false} />
             )}
         </div>

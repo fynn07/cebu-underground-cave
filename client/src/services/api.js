@@ -2,7 +2,23 @@ import Cookies from "js-cookie";
 import { toast } from "react-hot-toast";
 
 export const fetchPosts = async() => {
-    const data = await fetch('http://localhost:3400/post');
+    const token = Cookies.get('token');
+
+    if(!token){
+        const data = await fetch('http://localhost:3400/post_offline');
+
+        if(!data.ok){
+            throw new Error('Network response was not ok');
+        }
+        return await data.json();
+    }
+
+    const data = await fetch('http://localhost:3400/post_online', {
+        method : "GET",
+        headers: {
+            'Authorization' : token
+        }
+    });
     if(!data.ok){
         throw new Error('Network response was not ok');
     }
@@ -10,7 +26,22 @@ export const fetchPosts = async() => {
 }
 
 export const fetchPostFromID = async(id) => {
-    const data = await fetch(`http://localhost:3400/post/${id}`);
+    const token = Cookies.get('token');
+
+    if(!token){
+        const data = await fetch(`http://localhost:3400/post_offline/${id}`);
+        if(!data.ok){
+            throw new Error('Network response was not ok');
+        }
+        return await data.json();
+    }
+    
+    const data = await fetch(`http://localhost:3400/post_online/${id}`, {
+        method : "GET",
+        headers: {
+            'Authorization' : token
+        }
+    });
     if(!data.ok){
         throw new Error('Network response was not ok');
     }
@@ -240,6 +271,32 @@ export const changeProfilePicture = async(formData) => {
 
         const data = await response.json();
         return data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const likePost = async(postID) => {
+    const token = Cookies.get('token');
+
+    if(!token){
+        console.log("NO TOKEN");
+        toast.error("Must Be Logged In to Like Post");
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3400/like', {
+            method : 'POST',
+            headers : {
+                'Authorization' : token,
+                'Content-Type' : 'application/json'
+            },
+            body : JSON.stringify({
+                postID
+            })
+        })
+        console.log(response);
     } catch (error) {
         console.error(error);
     }

@@ -51,7 +51,7 @@ const createPost = async(req, res) => {
 }
 
 //FETCH
-const getPost = async (req, res) => {
+const getPostOffline = async (req, res) => {
     try {
         const results = await pool.query(`
             SELECT 
@@ -76,6 +76,52 @@ const getPost = async (req, res) => {
                 continue;
             }
             result.ImageLink = await createImageLink(link);
+        }
+        
+        for (const result of results.rows) {
+            result.hasLiked = false;
+        }
+
+        res.json(results.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+const getPostOnline = async (req, res) => {
+    try {
+        const results = await pool.query(`
+            SELECT 
+                p.*, 
+                u."DisplayName", 
+                u."ProfilePictureLink"
+            FROM "Post" p
+            JOIN "User" u ON p."AuthorID" = u."UserID"
+        `);
+        
+        for(const result of results.rows){
+            link = result.ProfilePictureLink;
+            if(link === "Default" || !link){
+                continue;
+            }
+            result.ProfilePictureLink = await createImageLink(link);
+        }
+
+        for(const result of results.rows){
+            link = result.ImageLink;
+            if(link === "null" || !link){
+                continue;
+            }
+            result.ImageLink = await createImageLink(link);
+        }
+
+        const userID = req.user.Id;
+        for (const result of results.rows) {
+            const hasLiked = await pool.query(
+                `SELECT * FROM "Likes" WHERE "PostID" = $1 AND "UserID" = $2`,
+                [result.PostID, userID]
+            );
+            result.hasLiked = hasLiked.rows.length > 0;
         }
 
         res.json(results.rows);
@@ -146,7 +192,7 @@ const createComment = async (req, res) => {
     }
 };
 
-const getPostByID = async (req, res) => {
+const getPostByIdOnline = async (req, res) => {
     try {
         const { id } = req.params;
         const result = await pool.query(`
@@ -169,6 +215,47 @@ const getPostByID = async (req, res) => {
         if(image_link !== "null" && image_link) {
             result.rows[0].ImageLink = await createImageLink(image_link);
         }
+
+        const userID = req.user.Id;
+        const hasLiked = await pool.query(
+            `SELECT * FROM "Likes" WHERE "PostID" = $1 AND "UserID" = $2`,
+            [id, userID]
+        );
+
+        result.rows[0].hasLiked = hasLiked.rows.length > 0;
+
+        return res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+const getPostByIdOffline = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query(`
+        SELECT 
+            p.*,
+            u."DisplayName",
+            u."ProfilePictureLink"
+        FROM "Post" p 
+        JOIN "User" u ON p."AuthorID" = u."UserID"
+        WHERE p."PostID" = $1
+        `, [id]);
+
+        profile_link = result.rows[0].ProfilePictureLink;
+        image_link = result.rows[0].ImageLink;
+
+        if (profile_link !== "Default" && profile_link) {
+            result.rows[0].ProfilePictureLink = await createImageLink(profile_link);
+        }
+
+        if(image_link !== "null" && image_link) {
+            result.rows[0].ImageLink = await createImageLink(image_link);
+        }
+
+        result.rows[0].hasLiked = false;
 
         return res.json(result.rows[0]);
     } catch (err) {
@@ -196,4 +283,48 @@ const getAllUsers = async(req, res) => {
     }
 }
 
-module.exports = { createPost, getPost, getPostByID, getComments, createComment, getAllUsers };
+const likePost = async (req, res) => {
+    const { postID } = req.body;
+    const userID = req.user.Id;
+
+    try {
+        const existingLike = await pool.query(
+            `SELECT * FROM "Likes" WHERE "PostID" = $1 AND "UserID" = $2`,
+            [postID, userID]
+        );
+
+        if (existingLike.rows.length > 0) {
+            // If the user already liked the post, unlike it
+            await pool.query(
+                `DELETE FROM "Likes" WHERE "PostID" = $1 AND "UserID" = $2`,
+                [postID, userID]
+            );
+
+            await pool.query(
+                `UPDATE "Post" SET "Upvotes" = "Upvotes" - 1 WHERE "PostID" = $1`,
+                [postID]
+            );
+
+            return res.json({ message: "Post unliked successfully" });
+        } else {
+            // If the user hasn't liked the post, like it
+            await pool.query(
+                `INSERT INTO "Likes" ("PostID", "UserID") VALUES ($1, $2)`,
+                [postID, userID]
+            );
+
+            await pool.query(
+                `UPDATE "Post" SET "Upvotes" = "Upvotes" + 1 WHERE "PostID" = $1`,
+                [postID]
+            );
+
+            return res.json({ message: "Post liked successfully" });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+
+module.exports = { createPost, getPostOffline, getPostOnline, getPostByIdOnline, getPostByIdOffline , getComments, createComment, getAllUsers, likePost };
