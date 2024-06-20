@@ -5,7 +5,7 @@ export const sortData = (data, filterType) => {
     if (filterType === 'Best') {
         return data.sort((a, b) => b.Upvotes - a.Upvotes);
     }
-    if (filterType === 'Most Engaged') {
+    if (filterType === 'Engaged') {
         return data.sort((a, b) => (b.Upvotes + b.CommentCount) - (a.Upvotes + a.CommentCount));
     }
     return data;

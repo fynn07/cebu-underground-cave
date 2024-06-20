@@ -1,19 +1,38 @@
-const { createImageLink } = require('../S3/client');
 const pool = require('../config/database');
 const jwt = require('jsonwebtoken');
+const { s3, bucketName, PutObjectCommand, createImageLink } = require('../S3/client');
+const { randomImageName } = require('../utils/randomImageName');
 
 //CREATE
 //req will now contain req.user which contains the ID for for the logged in user so you can query for users
 const createPost = async(req, res) => {
-    const { Title, Content, ImageLink, Genre} = req.body;
-
+    const { Title, Content, Genre} = req.body;
+    let ImageLink = null;
     const AuthorId = req.user.Id;
+
+    if(req.file){
+        const image = req.file.buffer;
+        ImageLink = randomImageName();
+
+
+        const putObjectParams = {
+            Bucket: bucketName,
+            Key: ImageLink,
+            Body: image,
+            ContentType: req.file.mimetype
+
+        }
+
+        const putCommand = new PutObjectCommand(putObjectParams);
+        await s3.send(putCommand);
+    }
 
     if(!Title){
         return res.status(400).json({error : "Title Required"});
     }
 
     try {
+
         const result = await pool.query(
             `INSERT INTO "Post" ("Title", "Content", "ImageLink", "Genre", "AuthorID") VALUES ($1, $2, $3, $4, $5) RETURNING *`,
             [Title, Content, ImageLink, Genre, AuthorId]
@@ -46,6 +65,15 @@ const getPost = async (req, res) => {
             }
             result.ProfilePictureLink = await createImageLink(link);
         }
+
+        for(const result of results.rows){
+            link = result.ImageLink;
+            if(link === "null" || !link){
+                continue;
+            }
+            result.ImageLink = await createImageLink(link);
+        }
+
         res.json(results.rows);
     } catch (err) {
         console.error(err);
@@ -127,11 +155,16 @@ const getPostByID = async (req, res) => {
         WHERE p."PostID" = $1
         `, [id]);
 
-        link = result.rows[0].ProfilePictureLink;
-        if(link === "Default" || !link){
-            return res.json(result.rows[0]);
+        profile_link = result.rows[0].ProfilePictureLink;
+        image_link = result.rows[0].ImageLink;
+
+        if (profile_link !== "Default" && profile_link) {
+            result.rows[0].ProfilePictureLink = await createImageLink(profile_link);
         }
-        result.rows[0].ProfilePictureLink = await createImageLink(link);
+
+        if(image_link !== "null" && image_link) {
+            result.rows[0].ImageLink = await createImageLink(image_link);
+        }
 
         return res.json(result.rows[0]);
     } catch (err) {

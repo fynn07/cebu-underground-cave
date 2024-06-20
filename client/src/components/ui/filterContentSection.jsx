@@ -15,7 +15,7 @@ const FilterContentSection = (props) => {
                 onChange={handleFilterChange}
             >
                 <option value='Newest'>New</option>
-                <option value='Test'>Engaged</option>
+                <option value='Engaged'>Engaged</option>
                 <option value='Best'>Best</option>
             </select>
             <select

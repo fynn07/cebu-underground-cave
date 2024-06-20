@@ -17,7 +17,7 @@ export const fetchPostFromID = async(id) => {
     return await data.json();
 }
 
-export const submitPost = async(Title, Content, Genre) => {
+export const submitPost = async(formData) => {
     const token = Cookies.get('token');
 
     if(!token){
@@ -27,15 +27,9 @@ export const submitPost = async(Title, Content, Genre) => {
         const response = await fetch(`http://localhost:3400/post`, {
             method: 'POST',
             headers: {
-                'Authorization' : token,
-                'Content-Type' : 'application/json',
+                'Authorization' : token
             },
-            body : JSON.stringify({
-                Title,
-                Content,
-                Genre,
-                ImageLink : 'null'
-            })
+            body : formData
         });
 
         const data = await response.json();

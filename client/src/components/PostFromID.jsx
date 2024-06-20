@@ -30,7 +30,7 @@ const PostFromID = (props) => {
         <div className="w-full h-full px-6 py-6 flex flex-col">
             <BackButton />
             <PostContent key={post.PostID} postID = {post.PostID} displayname={post.DisplayName} date={post.CreatedAt} title={post.Title} 
-            content={post.Content} profilePicture={post.ProfilePictureLink} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} isclicked={true} />
+            content={post.Content} image={post.ImageLink} profilePicture={post.ProfilePictureLink} upvotes={post.Upvotes} commentcount={post.CommentCount} genre={post.Genre} isclicked={true} />
             <CommentInput/>
 
             {comments.map(comment => <PostComment key={comment.CommentID} content={comment.Content} date={comment.CreatedAt} displayName={comment.DisplayName} 

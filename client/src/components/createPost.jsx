@@ -13,7 +13,13 @@ const CreatePost = () => {
     };
 
     const handleSubmit = async () => {
-        const response = await submitPost(title, content, genre);
+        const formData = new FormData();
+        formData.append("Image", image);
+        formData.append("Title", title);
+        formData.append("Content", content);
+        formData.append("Genre", genre);
+
+        const response = await submitPost(formData);
         if(response.id){
             setRedirect(`/${response.id}`);
         }
