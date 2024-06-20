@@ -2,6 +2,7 @@ const pool = require('../config/database');
 const jwt = require('jsonwebtoken');
 const { s3, bucketName, PutObjectCommand, createImageLink } = require('../S3/client');
 const { randomImageName } = require('../utils/randomImageName');
+const sharp = require('sharp');
 
 //CREATE
 //req will now contain req.user which contains the ID for for the logged in user so you can query for users
@@ -14,11 +15,14 @@ const createPost = async(req, res) => {
         const image = req.file.buffer;
         ImageLink = randomImageName();
 
-
+        const resized_image = await sharp(image)
+          .resize({ width : 1920, height : 1080, fit: "contain"})
+          .toBuffer();
+        
         const putObjectParams = {
             Bucket: bucketName,
             Key: ImageLink,
-            Body: image,
+            Body: resized_image,
             ContentType: req.file.mimetype
 
         }
