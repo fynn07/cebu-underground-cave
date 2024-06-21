@@ -11,11 +11,7 @@ const PostComment = (props) => {
                 </div>
             </div>
             <p className="text-gray-200 text-lg font-inrisans mt-1">{props.content}</p>
-            <div className="flex gap-3 pt-3 items-center">
-                <button className="bg-button_color text-white text-sm flex items-center py-1 px-2 gap-2 rounded-xl">
-                    <img className="w-3 h-3" src="/assets/like_post.png" alt="" />
-                    {props.upvotes}
-                </button>
+            <div className="flex gap-3 pt-4 items-center">
             </div>
         </div>
     )
