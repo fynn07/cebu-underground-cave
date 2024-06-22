@@ -3,10 +3,12 @@ import BackButton from "./ui/backButton";
 import { postData } from "../hooks/usePostData";
 import { submitPost } from "../services/api";
 import { Navigate } from "react-router-dom";
+import LoadingScreen from "./ui/loadingScreen";
 
 const CreatePost = () => {
     const {title, content, genre, redirect, handleGenre, handleTitle, handleContent, getCounterColor, setRedirect} = postData();
     const [image, setImage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleImageUpload = (e) => {
         setImage(e.target.files[0]);
@@ -19,14 +21,26 @@ const CreatePost = () => {
         formData.append("Content", content);
         formData.append("Genre", genre);
 
-        const response = await submitPost(formData);
-        if(response.id){
-            setRedirect(`/${response.id}`);
+        try {
+            setLoading(true);
+            const response = await submitPost(formData);
+            if(response.id){
+                setRedirect(`/${response.id}`);
+            }
+        } catch (error) {
+            console.error(error);
+        }finally{
+            setLoading(false);
         }
+
     }
 
     if (redirect) {
         return <Navigate to={redirect} />;
+    }
+
+    if(loading){
+        return <LoadingScreen/>
     }
 
     return (

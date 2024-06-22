@@ -6,9 +6,16 @@ const SignupForm = (props) => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        props.setLoading(true);
 
+        try {
         const response = await signupUser(email, name, password, confirmPassword);
-        console.log(response);
+            
+        } catch (error) {
+            console.error(error);
+        }finally{
+            props.setLoading(false);
+        }
     }
 
     return (
