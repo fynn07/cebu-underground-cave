@@ -1,6 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const pool = require('../config/database'); 
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const validateSignUpRequest = [
     //prebuilt express validator methods
@@ -74,7 +74,7 @@ const validateLoginRequest = [
 
         const user = result.rows[0];
 
-        const match = await bcrypt.compare(Password, user.Password);
+        const match = await bcryptjs.compare(Password, user.Password);
 
         if(!match){
             return res.status(401).json( {error : "Password is incorrect"} );

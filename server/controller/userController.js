@@ -1,6 +1,6 @@
 const pool = require('../config/database');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const bcryptjs = require('bcryptjs');
 const { s3, bucketName, PutObjectCommand, createImageLink } = require('../S3/client');
 const { randomImageName } = require('../utils/randomImageName');
 const { GetObjectCommand } = require('@aws-sdk/client-s3');
@@ -11,7 +11,7 @@ const createUser = async(req, res) => {
     const { Email, Password, DisplayName, ProfilePictureLink} = req.body;
     
     try {
-        const passwordHash = await bcrypt.hash(Password, 10);
+        const passwordHash = bcryptjs.hashSync(Password, 8);
 
         const result = await pool.query(
             `INSERT INTO "User" ("Email", "Password", "DisplayName", "ProfilePictureLink") VALUES($1, $2, $3, $4) RETURNING *`, 
