@@ -14,7 +14,7 @@ const LoginModal = (props) => {
     )
 
     return props.loginModalShow ? (
-        <div className="flex flex-col absolute rounded-xl top-0 left-0 bottom-0 right-0 m-auto w-96 p-8 h-3/4 bg-button_color">
+        <div className="flex flex-col absolute rounded-xl top-0 left-0 bottom-0 right-0 m-auto w-72 p-8 h-3/4 bg-button_color lg:w-80 xl:w-96 2xl:w-96">
             {content}
         </div>
 

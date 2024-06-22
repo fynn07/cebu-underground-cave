@@ -20,7 +20,7 @@ const Navbar = (props) => {
                 <SignupButton setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>
             </div>
             <div className="md:hidden lg:hidden xl:hidden 2xl:hidden">
-                <MobileDropDown/>
+                <MobileDropDown setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>
             </div>
         </div>
     );
@@ -28,11 +28,11 @@ const Navbar = (props) => {
     const logged_in = (
         <div className="flex gap-3 pr-3">
             <div className="flex items-center">
-                <Link to="/submit" className="flex items-center justify-center mr-6 py-2 hover:cursor-pointer bg-gray-200 rounded-lg">
+                <Link to="/submit" className="hidden items-center justify-center mr-6 py-2 hover:cursor-pointer bg-gray-200 rounded-lg lg:flex xl:flex 2xl:flex">
                     <p className="text-black text-sm font-inrisans px-4 text-center">Create Post</p>
                 </Link>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="hidden flex-col items-center sm:flex md:flex lg:flex xl:flex 2xl:flex">
                 <p className="text-white font-inrisans">{props.displayName}</p>
                 <p className="text-subtext font-inrisans text-sm">{props.rep} Rep</p>
             </div>
