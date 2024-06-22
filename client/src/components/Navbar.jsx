@@ -6,15 +6,22 @@ import ProfileModal from "./ui/profileModal";
 import { useState } from "react";
 import { useHandleProfileModal } from "../hooks/useHandleProfileModal";
 import { customProfilePicture } from "../utils/customProfilePicture";
+import MobileDropDown from "./ui/mobileDropDown";
 // make context different based on isLoggedIn state
 //check isLoggedIn Through cookie
 const Navbar = (props) => {
     const {showProfileModal, handleProfileClick, handleCloseModal, handleLogout , handleChangeProfilePicture} = useHandleProfileModal();
 
     const not_logged_in = (
+
         <div className="pr-6 flex items-center gap-12">
-            <LoginButton setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>
-            <SignupButton setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>
+            <div className="hidden md:contents lg:contents xl:contents 2xl:contents">
+                <LoginButton setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>
+                <SignupButton setSignupModalShow={props.setSignupModalShow} setLoginModalShow={props.setLoginModalShow}/>
+            </div>
+            <div className="md:hidden lg:hidden xl:hidden 2xl:hidden">
+                <MobileDropDown/>
+            </div>
         </div>
     );
 
@@ -42,8 +49,8 @@ const Navbar = (props) => {
         <div>
             <div className="flex justify-between items-center border-b-2 border-b-linegrey pb-3">
                 <div className="flex items-center pl-3 gap-4">
-                    <img className="w-9" src="/assets/logo.png" alt="" />
-                    <h1 className="text-white font-inrisans text-3xl">Cebu Underground Cave</h1>
+                    <img className="w-6 md:w-8 xl:w-9  2xl:w-9" src="/assets/logo.png" alt="" />
+                    <h1 className="text-white font-inrisans text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-3xl">Cebu Underground Cave</h1>
                 </div>
                 {props.loggedIn ? logged_in : not_logged_in}
             </div>

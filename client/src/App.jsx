@@ -43,17 +43,19 @@ function App({ isSinglePost, submitPage }) {
   return (
     <>
       <Toaster />
-      <div className="h-screen bg-background px-8 pt-4 flex flex-col">
+      <div className="h-screen bg-background pt-4 flex flex-col md:px-2 lg:px-4 xl:px-8 2xl:px-8">
         <Navbar displayName={name} rep={rep} loggedIn={loggedIn} setSignupModalShow={setSignupModalShow} profilePicture={profilePicture} setLoginModalShow={setLoginModalShow} />
-        <div className="flex flex-1 overflow-y-hidden">
+
+        <div className="flex flex-1 overflow-y-hidden 2xl:px-20">
           <Sidebar />
           <div ref={contentContainerRef} className="flex-[3] overflow-y-auto">
             {isSinglePost ? (<PostFromID id={params.PostID} />) : submitPage ? (<CreatePost />) : (<Content container={contentContainerRef.current} />)}
           </div>
-          <div className="flex-1 overflow-y-auto bg-black">
+          <div className="flex-1 overflow-y-auto bg-black hidden md:flex lg:flex xl:flex 2xl:flex">
             <Adspace />
           </div>
         </div>
+
       </div>
       <SignupModal signupModalShow={signupModalShow} setSignupModalShow={setSignupModalShow} setLoginModalShow={setLoginModalShow} />
       <LoginModal loginModalShow={loginModalShow} setLoginModalShow={setLoginModalShow} setSignupModalShow={setSignupModalShow} />
