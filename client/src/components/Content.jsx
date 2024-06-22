@@ -4,6 +4,7 @@ import FilterContentSection from "./ui/filterContentSection";
 import { useGenre } from "../hooks/useGenre";
 import { useFilter } from "../hooks/useFilter";
 import { useEffect } from "react";
+import LoadingScreen from "./ui/loadingScreen";
 
 const Content = ({ container }) => {
     const { genre, setGenre } = useGenre();
@@ -27,19 +28,16 @@ const Content = ({ container }) => {
     }, [loading, posts, container]);
 
     // TODO: Add loading Screen
-    if (loading) {
-        return (
-            <div>
-                {/* Add loading screen here */}
-            </div>
-        );
+    if(loading){
+        return <LoadingScreen />
     }
-    if (error) {
-        return (
+
+    if(error){
+        return(
             <div>
                 <h1>{error}</h1>
             </div>
-        );
+        )
     }
 
     return (

@@ -2,6 +2,7 @@ import { useFetchComments } from "../hooks/useFetchComments";
 import { useFetchPostFromID } from "../hooks/useFetchPostFromID";
 import BackButton from "./ui/backButton";
 import CommentInput from "./ui/commentInput";
+import LoadingScreen from "./ui/loadingScreen";
 import PostComment from "./ui/postComment";
 import PostContent from "./ui/postContent";
 
@@ -9,13 +10,8 @@ const PostFromID = (props) => {
     const {post, loading, error} = useFetchPostFromID(props.id);
     const {comments, comment_loading, comment_error} = useFetchComments(props.id);
 
-    //TODO: Add loading Screen
     if(loading || comment_loading){
-        return(
-            <div>
-
-            </div>
-        )
+        return <LoadingScreen />
     }
     if(error || comment_error){
         return(

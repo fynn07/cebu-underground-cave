@@ -7,11 +7,13 @@ import { toast } from "react-hot-toast";
 //PROD
 //https://cebu-underground-cave-backend.vercel.app/
 
+const BACKEND_URL = "https://cebu-underground-cave-backend.vercel.app/";
+
 export const fetchPosts = async() => {
     const token = Cookies.get('token');
 
     if(!token){
-        const data = await fetch('https://cebu-underground-cave-backend.vercel.app/post_offline');
+        const data = await fetch(`${BACKEND_URL}post_offline`);
 
         if(!data.ok){
             throw new Error('Network response was not ok');
@@ -19,7 +21,7 @@ export const fetchPosts = async() => {
         return await data.json();
     }
 
-    const data = await fetch('https://cebu-underground-cave-backend.vercel.app/post_online', {
+    const data = await fetch(`${BACKEND_URL}post_online`, {
         method : "GET",
         headers: {
             'Authorization' : token
@@ -35,14 +37,14 @@ export const fetchPostFromID = async(id) => {
     const token = Cookies.get('token');
 
     if(!token){
-        const data = await fetch(`https://cebu-underground-cave-backend.vercel.app/post_offline/${id}`);
+        const data = await fetch(`${BACKEND_URL}post_offline/${id}`);
         if(!data.ok){
             throw new Error('Network response was not ok');
         }
         return await data.json();
     }
     
-    const data = await fetch(`https://cebu-underground-cave-backend.vercel.app/post_online/${id}`, {
+    const data = await fetch(`${BACKEND_URL}post_online/${id}`, {
         method : "GET",
         headers: {
             'Authorization' : token
@@ -61,7 +63,7 @@ export const submitPost = async(formData) => {
         return;
     }
     try {
-        const response = await fetch(`https://cebu-underground-cave-backend.vercel.app/post`, {
+        const response = await fetch(`${BACKEND_URL}post`, {
             method: 'POST',
             headers: {
                 'Authorization' : token
@@ -86,7 +88,7 @@ export const submitPost = async(formData) => {
 
 export const fetchComments = async (PostedFromID) => {
     try {
-        const response = await fetch(`https://cebu-underground-cave-backend.vercel.app/comment?PostedFromID=${PostedFromID}`, {
+        const response = await fetch(`${BACKEND_URL}comment?PostedFromID=${PostedFromID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -106,7 +108,7 @@ export const fetchComments = async (PostedFromID) => {
 
 export const submitComment = async(Token, Content, PostedFromID) => {
     try {
-        const response = await fetch('https://cebu-underground-cave-backend.vercel.app/comment', {
+        const response = await fetch(`${BACKEND_URL}comment`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
@@ -135,7 +137,7 @@ export const submitComment = async(Token, Content, PostedFromID) => {
 
 export const loginUser = async(Email, Password) => {
     try {
-        const response = await fetch(`https://cebu-underground-cave-backend.vercel.app/login?`,{
+        const response = await fetch(`${BACKEND_URL}login?`,{
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
@@ -170,7 +172,7 @@ export const loginUser = async(Email, Password) => {
 
 export const signupUser = async (Email, DisplayName, Password, ConfirmPassword) => {
     try {
-        const response = await fetch('https://cebu-underground-cave-backend.vercel.app/signup', {
+        const response = await fetch(`${BACKEND_URL}signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -207,7 +209,7 @@ export const signupUser = async (Email, DisplayName, Password, ConfirmPassword) 
 
 export const logoutUser = async() => {
     try {
-        const response = await fetch('https://cebu-underground-cave-backend.vercel.app/logout', {
+        const response = await fetch(`${BACKEND_URL}logout`, {
             method : 'POST',
             headers : {
                 'Content-Type' : 'application/json'
@@ -236,7 +238,7 @@ export const getUser = async() => {
         if(!token){
             return;
         }
-        const response = await fetch('https://cebu-underground-cave-backend.vercel.app/getUser', {
+        const response = await fetch(`${BACKEND_URL}getUser`, {
             method : 'GET',
             headers : {
                 'Authorization' : token
@@ -252,7 +254,7 @@ export const getUser = async() => {
 
 export const getAllUsers = async() => {
     try {
-        const response = await fetch('https://cebu-underground-cave-backend.vercel.app/users');
+        const response = await fetch(`${BACKEND_URL}users`);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -267,7 +269,7 @@ export const changeProfilePicture = async(formData) => {
         console.log("NO TOKEN");
     }
     try {
-        const response = await fetch('https://cebu-underground-cave-backend.vercel.app/changeProfilePicture', {
+        const response = await fetch(`${BACKEND_URL}changeProfilePicture`, {
             method : 'POST',
             headers : {
                 'Authorization' : token,
@@ -292,7 +294,7 @@ export const likePost = async(postID) => {
     }
 
     try {
-        const response = await fetch('https://cebu-underground-cave-backend.vercel.app/like', {
+        const response = await fetch(`${BACKEND_URL}like`, {
             method : 'POST',
             headers : {
                 'Authorization' : token,
