@@ -24,6 +24,7 @@ const ProfileModal = ({ show, onClose, onLogout, onChangeProfilePicture }) => {
                 <Link
                     to="/submit"
                     className="block w-full text-center p-2 hover:bg-gray-200 lg:hidden xl:hidden 2xl:hidden"
+                    onClick={onClose}
                 >
                     Create Post
                 </Link>
