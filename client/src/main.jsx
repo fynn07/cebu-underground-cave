@@ -19,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/submit',
-    element: <CreatePostPage />
+    element: <App submitPage={true} />
   }
 ])
 

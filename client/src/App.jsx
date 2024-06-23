@@ -12,6 +12,7 @@ import PostFromID from "./components/PostFromID";
 import { useParams } from "react-router-dom";
 import CreatePost from "./components/createPost";
 import { useCurrentComponent } from "./hooks/useCurrentComponent";
+import Cookies from "js-cookie";
 
 function App({ isSinglePost, submitPage }) {
   const { loggedIn, name, rep, profilePicture } = isLoggedIn();
@@ -39,7 +40,7 @@ function App({ isSinglePost, submitPage }) {
       }
     };
   }, [logScrollPosition, contentContainerRef.current]);
-
+  
   return (
     <>
       <Toaster />
@@ -49,7 +50,7 @@ function App({ isSinglePost, submitPage }) {
         <div className="flex flex-1 overflow-y-hidden">
           <Sidebar />
           <div ref={contentContainerRef} className="flex-[3] overflow-y-auto 2xl:flex-[4]">
-            {isSinglePost ? (<PostFromID id={params.PostID} />) : submitPage ? (<CreatePost />) : (<Content container={contentContainerRef.current} />)}
+            {isSinglePost ? (<PostFromID id={params.PostID} />) : submitPage ? (Cookies.get('token') ? (<CreatePost />) : <Content container={contentContainerRef.current} />) : (<Content container={contentContainerRef.current} />)}
           </div>
           <div className="flex-1 overflow-y-auto bg-black hidden md:flex lg:flex xl:flex 2xl:flex">
             <Adspace />
