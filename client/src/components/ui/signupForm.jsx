@@ -43,7 +43,7 @@ const SignupForm = (props) => {
                     Log In
                 </p>
             </div>
-            <div className="text-center pt-8">
+            <div className="text-center pt-3">
             <button className="text-white text-sm font-inrisans py-2 px-6 rounded-2xl bg-linegrey" type="submit">Sign Up</button>
             </div>
         </form>
